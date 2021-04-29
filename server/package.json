@@ -6,7 +6,7 @@
     "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mizrael",
   "license": "ISC",
   "description": "",
   "dependencies": {
