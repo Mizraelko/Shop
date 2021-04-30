@@ -51,7 +51,7 @@ const TypeBrand = sequelize.define('type_brand', {
     id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
 })
 
-User.hasOne(Basket);
+User.hasOne(Basket); //определение зависимостей
 Basket.belongsTo(User);
 
 User.hasMany(Rating);
