@@ -1,7 +1,9 @@
 const Router = require('express');
 const router = new Router();
 const brandController = require('./brandController');
-router.post('/', brandController.create);
+const checkRoleMiddleware = require('../../middleware/checkRoleMiddleware');
+
+router.post('/',checkRoleMiddleware('ADMIN'), brandController.create);
 router.get('/', brandController.getAll);
 
 
