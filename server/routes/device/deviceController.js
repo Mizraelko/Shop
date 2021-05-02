@@ -62,6 +62,7 @@ class DeviceController {
       }
       return res.json(devices);
   }
+ 
 }
 
 module.exports = new DeviceController();
