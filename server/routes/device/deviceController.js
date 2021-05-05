@@ -62,7 +62,14 @@ class DeviceController {
       }
       return res.json(devices);
   }
- 
+  async deleteDevice(req, res) {
+    const {name} = req.body;
+
+    const device = await Device.findOne({where: {name}});
+    
+
+
+  }
 }
 
 module.exports = new DeviceController();
