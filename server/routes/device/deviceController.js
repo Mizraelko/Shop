@@ -1,5 +1,6 @@
 const uuid = require('uuid');
 const path = require('path');
+const fs = require('fs');
 const {Device, DeviceInfo} = require('../../models/models');
 const apiError = require('../../errors/apiError');
 
@@ -45,7 +46,7 @@ class DeviceController {
       const { brandId, typeId, limit, page} = req.query;
 
       page = page || 1;
-      limit = linit || 9;
+      limit = limit || 9;
       let offset = page * limit - limit;
       let devices;
       if(!brandId && !typeId) {
@@ -62,12 +63,26 @@ class DeviceController {
       }
       return res.json(devices);
   }
-  async deleteDevice(req, res) {
-    const {name} = req.body;
-
-    const device = await Device.findOne({where: {name}});
-    
-
+  async deleteDevice(req, res, next) {
+    try {
+      const {id} = req.params;
+      const deleteDevice = await Device.findOne({where: {id}});
+     
+      if(deleteDevice) {
+        try {
+          fs.unlinkSync(`static/${deleteDevice.img}`)
+          console.log('Deleted')
+        } catch (e) {
+          console.log(e)
+        }
+        await Device.destroy({where: {id}});
+        return res.json({message: `${deleteDevice.name} Был успешно удален`});
+      }
+      return res.json({message: 'Введите правильный id'})
+     } catch (e) {
+      next(apiError.badRequest(e.message));
+    }
+   
 
   }
 }
