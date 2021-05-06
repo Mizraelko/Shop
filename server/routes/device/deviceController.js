@@ -71,9 +71,9 @@ class DeviceController {
       if(deleteDevice) {
         try {
           fs.unlinkSync(`static/${deleteDevice.img}`)
-          console.log('Deleted')
+          
         } catch (e) {
-          console.log(e)
+          console.log(e.message = 'Такое изображение не найденно')
         }
         await Device.destroy({where: {id}});
         return res.json({message: `${deleteDevice.name} Был успешно удален`});
